@@ -21,8 +21,6 @@ Route::get('/home', 'HomeController@index');
 
 Route::resource('teacher', 'TeacherController');
 
-Route::get('/test', function () {
-    return view('structure');
-});
+Route::resource('student', 'StudentController');
 
 /*Route::post('addu', 'HomeController@add');*/
