@@ -8,5 +8,7 @@ class Teacher_Course extends Model
 {
     //
 
-    protected $table = 'teacher_courses';
+    protected $table = 'teacher_course';
+
+    public $timestamps = false;
 }

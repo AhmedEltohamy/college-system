@@ -13,7 +13,8 @@ class CreateTeachersTable extends Migration
     public function up()
     {
         Schema::create('teacher', function (Blueprint $table) {
-            $table->integer('user_id')->primary();
+            $table->increments("id");
+            $table->integer('user_id')->unsigned();
             $table->string('specialization');
         });
     }
@@ -25,6 +26,6 @@ class CreateTeachersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('teachers');
+        Schema::drop('teacher');
     }
 }

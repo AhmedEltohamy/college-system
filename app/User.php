@@ -21,9 +21,10 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 
     ];
 
+    protected $rememberTokenName = false;
 
     public function student()
     {
@@ -32,6 +33,15 @@ class User extends Authenticatable
 
     public function teacher()
     {
-        return $this->hasOne('App\Teacher','user_id');
+        return $this->hasOne('App\Teacher');
     }
+
+    public function setAttribute($key, $value)
+  {
+    $isRememberTokenAttribute = $key == $this->getRememberTokenName();
+    if (!$isRememberTokenAttribute)
+    {
+      parent::setAttribute($key, $value);
+    }
+  }
 }

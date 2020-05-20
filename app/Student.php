@@ -8,6 +8,12 @@ class Student extends Model
 {
     //
 
+    public $timestamps = false;
+
+    protected $fillable = [
+        'id', 'user_id', 'level',
+    ];
+
     protected $table = 'student';
 
     public function user()
@@ -17,7 +23,7 @@ class Student extends Model
 
     public function courses()
     {
-        return $this->belongsToMany('App\Course', 'student_courses', 'student_id', 'course_id');
+        return $this->belongsToMany('App\Course', 'student_course', 'student_id', 'course_id');
     }
 
 }

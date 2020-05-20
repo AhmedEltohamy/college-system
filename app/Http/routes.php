@@ -18,4 +18,11 @@ Route::get('/', function () {
 Route::auth();
 
 Route::get('/home', 'HomeController@index');
+
+Route::resource('teacher', 'TeacherController');
+
+Route::get('/test', function () {
+    return view('structure');
+});
+
 /*Route::post('addu', 'HomeController@add');*/
