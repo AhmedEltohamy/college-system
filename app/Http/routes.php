@@ -23,4 +23,5 @@ Route::resource('teacher', 'TeacherController');
 
 Route::resource('student', 'StudentController');
 
-/*Route::post('addu', 'HomeController@add');*/
+Route::resource('course', 'CourseController');
+
