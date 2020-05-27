@@ -14,6 +14,8 @@ use App\Student;
 
 use App\User;
 
+use App\Course;
+
 class StudentController extends Controller
 {
 
@@ -143,9 +145,38 @@ class StudentController extends Controller
     public function destroy($id)
     {
         $user = User::find($id);
+        $user->student->courses()->detach();
         $user->student()->delete();
         $user->delete();
 
         return redirect('/student')->with('success', 'Student deleted');
+    }
+
+    public function registerCourses()
+    {
+        $courses = Course::all();
+   
+        return view('student.studentRegister',compact('courses'));
+    }
+
+    public function submitCourses(Request $request)
+    {
+        if (count($request->courses) < 7) {
+            $user = User::find(\Auth::user()->id);
+            $user->student->courses()->sync($request->courses);
+
+            return redirect('/student/register')->with('success', 'Your registeration has been updated');
+        }else {
+            return redirect('/student/register')->with('err', 'You must select 6 courses at maximum');
+        }
+    }
+
+    public function showCourses()
+    {
+        $user = User::find(\Auth::user()->id);
+        $courses = $user->student->courses;
+
+        return view('student.showCourses',compact('courses'));
+        
     }
 }

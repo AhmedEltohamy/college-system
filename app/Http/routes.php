@@ -21,7 +21,15 @@ Route::get('/home', 'HomeController@index');
 
 Route::resource('teacher', 'TeacherController');
 
+/******************student********************/
+Route::get('/student/register','StudentController@registerCourses')->name('student.register');
+
+Route::get('/student/showCourses','StudentController@showCourses')->name('student.showCourses');
+
+Route::post('/student/saveCourses','StudentController@submitCourses')->name('student.submitCourses');
+
 Route::resource('student', 'StudentController');
+/*****************end student****************************/
 
 Route::resource('course', 'CourseController');
 
