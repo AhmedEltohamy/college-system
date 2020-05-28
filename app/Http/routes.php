@@ -19,7 +19,15 @@ Route::auth();
 
 Route::get('/home', 'HomeController@index');
 
+/*****************teacher**********************/
+Route::get('/teacher/assignCourse','TeacherController@assignCourses')->name('teacher.assignCourse');
+
+Route::get('/teacher/showCourses','TeacherController@showCourses')->name('teacher.showCourses');
+
+Route::post('/teacher/saveCouses','TeacherController@saveCourses')->name('teacher.saveCouses');
+
 Route::resource('teacher', 'TeacherController');
+/******************end teacher**************************/
 
 /******************student********************/
 Route::get('/student/register','StudentController@registerCourses')->name('student.register');
@@ -32,4 +40,3 @@ Route::resource('student', 'StudentController');
 /*****************end student****************************/
 
 Route::resource('course', 'CourseController');
-

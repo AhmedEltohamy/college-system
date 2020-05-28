@@ -14,9 +14,7 @@ use App\Teacher;
 
 use App\User;
 
-use Auth;
-
-use DB;
+use App\Course;
 
 class TeacherController extends Controller
 {
@@ -36,7 +34,7 @@ class TeacherController extends Controller
     {
         $users = User::where('role_id', 2)->get();
         
-        return view('admin.teacherIndex', compact('users'));
+        return view('teacher.teacherIndex', compact('users'));
     }
 
     /**
@@ -46,7 +44,7 @@ class TeacherController extends Controller
      */
     public function create()
     {
-        return view('admin.createTeacher');
+        return view('teacher.createTeacher');
     }
 
     /**
@@ -95,7 +93,7 @@ class TeacherController extends Controller
     {
         $users = User::where('role_id', 2)->get();
         
-        return view('admin.teacherIndex', compact('users'));
+        return view('teacher.teacherIndex', compact('users'));
     }
 
     /**
@@ -107,7 +105,7 @@ class TeacherController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        return view('admin.teacherEdit', compact('user'));
+        return view('teacher.teacherEdit', compact('user'));
     }
 
     /**
@@ -149,9 +147,38 @@ class TeacherController extends Controller
     public function destroy($id)
     {
         $user = User::find($id);
+        $user->teacher->courses()->detach();
         $user->teacher()->delete();
         $user->delete();
 
         return redirect('/teacher')->with('success', 'Teacher deleted');
+    }
+
+    public function assignCourses()
+    {
+        $users = User::with('teacher')->where('role_id', 2)->get();
+        $courses = Course::all();
+
+        return view('teacher.assignCourses',compact('users','courses'));
+    }
+
+    public function saveCourses(Request $request)
+    {
+        if (count($request->courses) < 4) {
+            $user = User::find($request->taecher);
+            $user->teacher->courses()->sync($request->courses);
+
+            return redirect('/teacher/assignCourse')->with('success', 'Assign operation has been updated');
+        }else {
+            return redirect('/teacher/assignCourse')->with('err', 'Teacher shouid assign to 3 courses at maximum');
+        }
+    }
+
+    public function showCourses()
+    {
+        $user = User::find(\Auth::user()->id);
+        $courses = $user->teacher->courses;
+
+        return view('teacher.showCourses',compact('courses'));
     }
 }

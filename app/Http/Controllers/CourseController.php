@@ -132,6 +132,7 @@ class CourseController extends Controller
     {
         $course = Course::find($id);
         $course->students()->detach();
+        $course->teachers()->detach();
         $course->delete();
 
         return redirect('/course')->with('success', 'Course deleted');
