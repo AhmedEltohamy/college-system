@@ -78,7 +78,9 @@ class CourseController extends Controller
      */
     public function show($id)
     {
+        $courses = Course::all();
         
+        return view('course.courseIndex', compact('courses'));
     }
 
     /**

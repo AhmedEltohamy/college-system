@@ -1,24 +1,27 @@
-@extends('structure')
-@section('main')
+@if(Auth::user()->role_id == 1)
+@extends('layouts.app')
+@section('content')
 
-<div class="row">
+<div class="container">
 
+  <div class="row">
 
-  <div class="col-sm-8 offset-sm-2">
-      <h1 class="display-3">Add Teacher</h1>
-  <div>
-
+    <h1 class="display-3">Add Teacher</h1>
+  
     @if ($errors->any())
     <div class="alert alert-danger">
       <ul>
-          @foreach ($errors->all() as $error)
-          <li>{{ $error }}</li>
-          @endforeach
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
       </ul>
     </div>
     <br />
     @endif
 
+  </div>  
+
+  <div class="row">
     <form method="post" action="{{ route('teacher.store') }}">
       {{csrf_field()}}
 
@@ -47,5 +50,10 @@
     </form>
   </div>
 </div>
-</div>
 @endsection
+
+@else
+<script type="text/javascript">
+    window.location = "{{ url('/home') }}";
+</script>
+@endif

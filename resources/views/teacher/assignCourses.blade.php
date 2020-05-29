@@ -1,5 +1,6 @@
-@extends('structure')
-@section('main')
+@if(Auth::user()->role_id == 1)
+@extends('layouts.app')
+@section('content')
 
 <div class="container">
 
@@ -53,3 +54,9 @@
     </div>
 </div>
 @endsection
+
+@else
+<script type="text/javascript">
+    window.location = "{{ url('/home') }}";
+</script>
+@endif
